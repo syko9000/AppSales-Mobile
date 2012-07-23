@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A96FC35159BBF4200D4EF01 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A96FC34159BBF4200D4EF01 /* WebViewController.m */; };
 		6D81575414CB3C2B005E8F3F /* KKKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D81574914CB3C2B005E8F3F /* KKKeychain.m */; };
 		6D81575514CB3C2B005E8F3F /* KKPasscodeLock.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D81574B14CB3C2B005E8F3F /* KKPasscodeLock.m */; };
 		6D81575614CB3C2B005E8F3F /* KKPasscodeSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D81574D14CB3C2B005E8F3F /* KKPasscodeSettingsViewController.m */; };
@@ -665,6 +666,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A96FC33159BBF4200D4EF01 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		0A96FC34159BBF4200D4EF01 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		6D81574814CB3C2B005E8F3F /* KKKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KKKeychain.h; sourceTree = "<group>"; };
 		6D81574914CB3C2B005E8F3F /* KKKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KKKeychain.m; sourceTree = "<group>"; };
 		6D81574A14CB3C2B005E8F3F /* KKPasscodeLock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KKPasscodeLock.h; sourceTree = "<group>"; };
@@ -1427,6 +1430,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0A96FC31159BBEC900D4EF01 /* iAd */ = {
+			isa = PBXGroup;
+			children = (
+				0A96FC33159BBF4200D4EF01 /* WebViewController.h */,
+				0A96FC34159BBF4200D4EF01 /* WebViewController.m */,
+			);
+			name = iAd;
+			sourceTree = "<group>";
+		};
 		7F1499D113BE312100D89064 /* Report Download */ = {
 			isa = PBXGroup;
 			children = (
@@ -1460,6 +1472,7 @@
 				7FDF601F13DD21BB005F1E2D /* Accounts and Settings */,
 				7F7F1D0913F643F300F18143 /* Promo Codes */,
 				7FDF601D13DD2125005F1E2D /* Dashboard */,
+				0A96FC31159BBEC900D4EF01 /* iAd */,
 				7FDF602013DD21D5005F1E2D /* Common UI */,
 				7F7F1D0413F63F7F00F18143 /* Promo Code Download */,
 				7F88897A14CD4C9A007604D7 /* Passcode Lock */,
@@ -3084,6 +3097,7 @@
 				7FDCCEAF1594318400124140 /* trees.c in Sources */,
 				7FDCCEB01594318400124140 /* uncompr.c in Sources */,
 				7FDCCEB11594318400124140 /* zutil.c in Sources */,
+				0A96FC35159BBF4200D4EF01 /* WebViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

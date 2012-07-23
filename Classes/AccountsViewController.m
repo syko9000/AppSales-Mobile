@@ -9,6 +9,7 @@
 #import "AccountsViewController.h"
 #import "SalesViewController.h"
 #import "ReviewsViewController.h"
+#import "WebViewController.h"
 #import "SSKeychain.h"
 #import "ASAccount.h"
 #import "Report.h"
@@ -177,7 +178,7 @@
 	if ([self.accounts count] == 0) {
 		return 0;
 	}
-	return 5;
+	return 6;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -199,13 +200,19 @@
 		cell.badgeCount = badge;
 		cell.imageView.image = [UIImage imageNamed:@"Sales.png"];
 		cell.imageView.highlightedImage = [UIImage as_tintedImageNamed:@"Sales.png" color:[UIColor whiteColor]];
-	} else if (indexPath.row == 1) {
+    } else if (indexPath.row == 1) {
+        NSInteger badge = [[[self.accounts objectAtIndex:indexPath.section] reportsBadge] integerValue];
+        cell.textLabel.text = NSLocalizedString(@"iAd Network", nil);
+        cell.badgeCount = badge;
+        cell.imageView.image = [UIImage imageNamed:@"Sales.png"];
+        cell.imageView.highlightedImage = [UIImage as_tintedImageNamed:@"Sales.png" color:[UIColor whiteColor]];
+	} else if (indexPath.row == 2) {
 		NSInteger badge = [[[self.accounts objectAtIndex:indexPath.section] paymentsBadge] integerValue];
 		cell.textLabel.text = NSLocalizedString(@"Payments", nil);
 		cell.badgeCount = badge;
 		cell.imageView.image = [UIImage imageNamed:@"Payments.png"];
 		cell.imageView.highlightedImage = [UIImage as_tintedImageNamed:@"Payments.png" color:[UIColor whiteColor]];
-	} else if (indexPath.row == 2) {
+	} else if (indexPath.row == 3) {
 		cell.textLabel.text = NSLocalizedString(@"Customer Reviews", nil);
 		cell.imageView.image = [UIImage imageNamed:@"Reviews.png"];
 		cell.imageView.highlightedImage = [UIImage as_tintedImageNamed:@"Reviews.png" color:[UIColor whiteColor]];
@@ -215,12 +222,12 @@
 		[unreadReviewsRequest setEntity:[NSEntityDescription entityForName:@"Review" inManagedObjectContext:[self managedObjectContext]]];
 		[unreadReviewsRequest setPredicate:[NSPredicate predicateWithFormat:@"product.account == %@ AND unread == TRUE", account]];
 		cell.badgeCount = [[self managedObjectContext] countForFetchRequest:unreadReviewsRequest error:NULL];
-	} else if (indexPath.row == 3) {
+	} else if (indexPath.row == 4) {
 		cell.textLabel.text = NSLocalizedString(@"Promo Codes", nil);
 		cell.imageView.image = [UIImage imageNamed:@"PromoCodes.png"];
 		cell.imageView.highlightedImage = [UIImage as_tintedImageNamed:@"PromoCodes.png" color:[UIColor whiteColor]];
 		cell.badgeCount = 0;
-	} else if (indexPath.row == 4) {
+	} else if (indexPath.row == 5) {
 		cell.textLabel.text = NSLocalizedString(@"Account", nil);
 		cell.imageView.image = [UIImage imageNamed:@"Account.png"];
 		cell.imageView.highlightedImage = [UIImage as_tintedImageNamed:@"Account.png" color:[UIColor whiteColor]];
@@ -271,16 +278,19 @@
 	if (indexPath.row == 0) {
 		SalesViewController *salesViewController = [[[SalesViewController alloc] initWithAccount:account] autorelease];
 		[self.navigationController pushViewController:salesViewController animated:YES];
-	} else if (indexPath.row == 1) {
+    } else if (indexPath.row == 1) {
+        WebViewController *webViewController = [[[WebViewController alloc] initWithAccount:account] autorelease];
+        [self.navigationController pushViewController:webViewController animated:YES];
+	} else if (indexPath.row == 2) {
 		PaymentsViewController *paymentsViewController = [[[PaymentsViewController alloc] initWithAccount:account] autorelease];
 		[self.navigationController pushViewController:paymentsViewController animated:YES];
-	} else if (indexPath.row == 2) {
+	} else if (indexPath.row == 3) {
 		ReviewsViewController *reviewsViewController = [[[ReviewsViewController alloc] initWithAccount:account] autorelease];
 		[self.navigationController pushViewController:reviewsViewController animated:YES];
-	} else if (indexPath.row == 3) {
+	} else if (indexPath.row == 4) {
 		PromoCodesViewController *promoCodesViewController = [[[PromoCodesViewController alloc] initWithAccount:account] autorelease];
 		[self.navigationController pushViewController:promoCodesViewController animated:YES];
-	} else if (indexPath.row == 4) {
+	} else if (indexPath.row == 5) {
 		[self editAccount:account];
 	}
 }
