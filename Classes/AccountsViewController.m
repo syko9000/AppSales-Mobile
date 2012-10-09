@@ -201,9 +201,7 @@
 		cell.imageView.image = [UIImage imageNamed:@"Sales.png"];
 		cell.imageView.highlightedImage = [UIImage as_tintedImageNamed:@"Sales.png" color:[UIColor whiteColor]];
     } else if (indexPath.row == 1) {
-        NSInteger badge = [[[self.accounts objectAtIndex:indexPath.section] reportsBadge] integerValue];
         cell.textLabel.text = NSLocalizedString(@"iAd Network", nil);
-        cell.badgeCount = badge;
         cell.imageView.image = [UIImage imageNamed:@"Sales.png"];
         cell.imageView.highlightedImage = [UIImage as_tintedImageNamed:@"Sales.png" color:[UIColor whiteColor]];
 	} else if (indexPath.row == 2) {
