@@ -306,7 +306,7 @@
 		});
 		NSScanner *paymentsScanner = [NSScanner scannerWithString:loginPage];
 		NSString *paymentsAction = nil;
-		[paymentsScanner scanUpToString:@"alt=\"Payments and Financial Reports" intoString:NULL];
+		[paymentsScanner scanUpToString:@"src=\"https://itc.mzstatic.com/itc/images/money.png\"" intoString:NULL];
 		[paymentsScanner scanUpToString:@"<a href=\"" intoString:NULL];
 		[paymentsScanner scanString:@"<a href=\"" intoString:NULL];
 		[paymentsScanner scanUpToString:@"\"" intoString:&paymentsAction];
@@ -414,6 +414,17 @@
 	
 	NSScanner *graphDataScanner = [NSScanner scannerWithString:paymentsPage];
 	NSString *graphDataJSON = nil;
+
+    NSInteger owed_month, owed_year;
+    double owed;
+
+    [graphDataScanner scanUpToString:@"<div class=\"owed\">" intoString:NULL];
+    [graphDataScanner scanUpToString:@"<div class=\"text-value\">" intoString:NULL];
+    [graphDataScanner scanString:@"<div class=\"text-value\">" intoString:NULL];
+    [graphDataScanner scanDouble:&owed];
+
+    NSLog(@"Amounts Owed (estimated): %.02f", owed);
+
 	[graphDataScanner scanUpToString:@"var graph_data_salesGraph_24_months = " intoString:NULL];
 	[graphDataScanner scanString:@"var graph_data_salesGraph_24_months = " intoString:NULL];
 	[graphDataScanner scanUpToString:@"}" intoString:&graphDataJSON];
@@ -424,9 +435,9 @@
 		NSDictionary *graphDict = [graphDataJSON objectFromJSONStringWithParseOptions:JKParseOptionUnicodeNewlines | JKParseOptionLooseUnicode error:&jsonError];
 		if (graphDict) {
 			NSSet *allExistingPayments = account.payments;
-			NSMutableSet *existingPaymentIdentifiers = [NSMutableSet set];
+			NSMutableDictionary *existingPaymentIdentifiers = [NSMutableDictionary dictionary];
 			for (NSManagedObject *payment in allExistingPayments) {
-				[existingPaymentIdentifiers addObject:[NSString stringWithFormat:@"%@-%@-%@", [payment valueForKey:@"vendorID"], [payment valueForKey:@"month"], [payment valueForKey:@"year"]]];
+                [existingPaymentIdentifiers setObject:payment forKey:[NSString stringWithFormat:@"%@-%@-%@", [payment valueForKey:@"vendorID"], [payment valueForKey:@"month"], [payment valueForKey:@"year"]]];
 			}
 			NSDateFormatter *paymentMonthFormatter = [[[NSDateFormatter alloc] init] autorelease];
 			[paymentMonthFormatter setLocale:[[[NSLocale alloc] initWithLocaleIdentifier:@"en-us"] autorelease]];
@@ -454,21 +465,40 @@
 						NSDate *labelDate = [paymentMonthFormatter dateFromString:label];
 						if (labelDate) {
 							NSDateComponents *dateComponents = [calendar components:NSMonthCalendarUnit | NSYearCalendarUnit fromDate:labelDate];
-							NSInteger month = [dateComponents month];
-							NSInteger year = [dateComponents year];
+							NSInteger month = owed_month = [dateComponents month];
+							NSInteger year = owed_year = [dateComponents year];
 							NSString *paymentIdentifier = [NSString stringWithFormat:@"%@-%i-%i", vendorID, month, year];
-							if (![existingPaymentIdentifiers containsObject:paymentIdentifier]) {
-								NSManagedObject *payment = [NSEntityDescription insertNewObjectForEntityForName:@"Payment" inManagedObjectContext:moc];
-								[payment setValue:account forKey:@"account"];
-								[payment setValue:[NSNumber numberWithInteger:month] forKey:@"month"];
-								[payment setValue:[NSNumber numberWithInteger:year] forKey:@"year"];
-								[payment setValue:amount forKey:@"amount"];
-								[payment setValue:currency forKey:@"currency"];
-								[payment setValue:vendorID forKey:@"vendorID"];
+                            NSManagedObject *payment = [existingPaymentIdentifiers objectForKey:paymentIdentifier];
+							if (!payment) {
+								payment = [NSEntityDescription insertNewObjectForEntityForName:@"Payment" inManagedObjectContext:moc];
 								numberOfPaymentsLoaded++;
-							}
+                            }
+                            [payment setValue:account forKey:@"account"];
+                            [payment setValue:[NSNumber numberWithInteger:month] forKey:@"month"];
+                            [payment setValue:[NSNumber numberWithInteger:year] forKey:@"year"];
+                            [payment setValue:amount forKey:@"amount"];
+                            [payment setValue:currency forKey:@"currency"];
+                            [payment setValue:vendorID forKey:@"vendorID"];
 						}
 					}
+                    
+                    owed_month++;
+                    if (owed_month == 13) {
+                        owed_month = 1;
+                        owed_year++;
+                    }
+                    NSString *paymentIdentifier = [NSString stringWithFormat:@"%@-%i-%i", vendorID, owed_month, owed_year];
+                    NSManagedObject *payment = [existingPaymentIdentifiers objectForKey:paymentIdentifier];
+                    if (!payment) {
+                        payment = [NSEntityDescription insertNewObjectForEntityForName:@"Payment" inManagedObjectContext:moc];
+                        numberOfPaymentsLoaded++;
+                    }
+                    [payment setValue:account forKey:@"account"];
+                    [payment setValue:[NSNumber numberWithInteger:owed_month] forKey:@"month"];
+                    [payment setValue:[NSNumber numberWithInteger:owed_year] forKey:@"year"];
+                    [payment setValue:[NSNumber numberWithDouble:owed] forKey:@"amount"];
+                    [payment setValue:currency forKey:@"currency"];
+                    [payment setValue:vendorID forKey:@"vendorID"];
 				}
 				account.paymentsBadge = [NSNumber numberWithInteger:[account.paymentsBadge integerValue] + numberOfPaymentsLoaded];
 			}

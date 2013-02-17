@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A58422A16CFC6D700619131 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A58422916CFC6D700619131 /* Default-568h@2x.png */; };
 		0A96FC35159BBF4200D4EF01 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A96FC34159BBF4200D4EF01 /* WebViewController.m */; };
 		6D81575414CB3C2B005E8F3F /* KKKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D81574914CB3C2B005E8F3F /* KKKeychain.m */; };
 		6D81575514CB3C2B005E8F3F /* KKPasscodeLock.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D81574B14CB3C2B005E8F3F /* KKPasscodeLock.m */; };
@@ -666,6 +667,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A58422916CFC6D700619131 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		0A96FC33159BBF4200D4EF01 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		0A96FC34159BBF4200D4EF01 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		6D81574814CB3C2B005E8F3F /* KKKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KKKeychain.h; sourceTree = "<group>"; };
@@ -1584,6 +1586,7 @@
 				6D81576214CB44BE005E8F3F /* passcode_square_empty@2x.png */,
 				6D81576314CB44BE005E8F3F /* passcode_square_filled.png */,
 				6D81576414CB44BE005E8F3F /* passcode_square_filled@2x.png */,
+				0A58422916CFC6D700619131 /* Default-568h@2x.png */,
 				7F15452F14223FFA00D74A18 /* Default-Portrait~ipad.png */,
 				7F2E75D114237F2500793375 /* Default-Landscape~ipad.png */,
 				7FAEB66813E6D1AF00750788 /* Badge.png */,
@@ -3005,6 +3008,7 @@
 				6D81576614CB44BE005E8F3F /* passcode_square_empty@2x.png in Resources */,
 				6D81576714CB44BE005E8F3F /* passcode_square_filled.png in Resources */,
 				6D81576814CB44BE005E8F3F /* passcode_square_filled@2x.png in Resources */,
+				0A58422A16CFC6D700619131 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
